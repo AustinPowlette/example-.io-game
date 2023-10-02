@@ -39,7 +39,7 @@ $ npm start
 
 ## Tests
 
-To run the tests for this this project, simply
+To run the tests for this this project, simply (This is a test)
 
 ```bash
 $ npm install
