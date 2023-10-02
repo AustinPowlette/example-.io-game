@@ -1,0 +1,18 @@
+Red circle around players that can kill you easily
+Option to cloak your level
+
+Power Stones that increase level
+
+
+Hunger - Berry Bushes
+Stones
+Trees
+Foliage
+
+
+Buildings and areas that increase power stone gain
+
+Piercing
+Speed
+Health
+Regen
