@@ -4,11 +4,11 @@
   "description": "",
   "main": "src/server/server.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "lint": "eslint --cache --ext .js,.jsx src/",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider nuxt && webpack --config webpack.prod.js",
+    "lint": "SET NODE_OPTIONS=--openssl-legacy-provider nuxt && eslint --cache --ext .js,.jsx src/",
     "develop": "SET NODE_OPTIONS=--openssl-legacy-provider nuxt && cross-env NODE_ENV=development node src/server/server.js",
-    "start": "cross-env NODE_ENV=production node src/server/server.js",
-    "test": "jest"
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider nuxt && cross-env NODE_ENV=production node src/server/server.js",
+    "test": "SET NODE_OPTIONS=--openssl-legacy-provider nuxt && jest"
   },
   "author": "Victor Zhou",
   "license": "MIT",
