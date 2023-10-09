@@ -1,5 +1,6 @@
 const Constants = require('../shared/constants');
 const Player = require('./player');
+const Resource = require('./resource');
 const applyCollisions = require('./collisions');
 
 class Game {
@@ -7,10 +8,12 @@ class Game {
     this.sockets = {};
     this.players = {};
     this.bullets = [];
+    this.resources = [];
+    this.lastResourceSpawnTime = Date.now();
+    this.resourceSpawnInterval = Constants.RESOURCE_SPAWN_INTERVAL; // Define this constant
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
-    console.log("Updating Server");
   }
 
   addPlayer(socket, username) {
@@ -61,11 +64,29 @@ class Game {
     }
   }
 
+  updateResources() {
+      const now = Date.now();
+      if (now - this.lastResourceSpawnTime >= this.resourceSpawnInterval) {
+        this.spawnResource();
+        this.lastResourceSpawnTime = now;
+      }
+    }
+
+    spawnResource() {
+      const x = Math.random() * Constants.MAP_SIZE;
+      const y = Math.random() * Constants.MAP_SIZE;
+      const resource = new Resource(this.resources.length, x, y);
+      this.resources.push(resource);
+    }
+
   update() {
     // Calculate time elapsed
     const now = Date.now();
     const dt = (now - this.lastUpdateTime) / 1000;
     this.lastUpdateTime = now;
+
+    // Update resources
+    this.updateResources();
 
     // Update each bullet
     const bulletsToRemove = [];
@@ -88,10 +109,24 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-    const destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
+    let destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
     destroyedBullets.forEach(b => {
       if (this.players[b.parentID]) {
         this.players[b.parentID].onDealtDamage();
+      }
+    });
+    this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
+
+    // Apply collisions, give players score for hitting bullets
+    destroyedBullets = applyCollisions(Object.values(this.resources), this.bullets);
+    destroyedBullets.forEach(b => {
+      if (this.resources) {
+        if (Math.random(100) + 1 > 20 ) {
+            this.players[b.parentID].stone += 1;
+        }
+        else {
+            this.players[b.parentID].powerStone += 1;
+        }
       }
     });
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
@@ -134,12 +169,16 @@ class Game {
     const nearbyBullets = this.bullets.filter(
       b => b.distanceTo(player) <= Constants.MAP_SIZE / 2,
     );
+    const nearbyResources = this.resources.filter(
+      r => r.distanceTo(player) <= Constants.MAP_SIZE / 2,
+    );
 
     return {
       t: Date.now(),
       me: player.serializeForUpdate(),
       others: nearbyPlayers.map(p => p.serializeForUpdate()),
       bullets: nearbyBullets.map(b => b.serializeForUpdate()),
+      resources: nearbyResources.map(r => r.serializeForUpdate()),
       leaderboard,
     };
   }

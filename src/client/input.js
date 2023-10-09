@@ -34,16 +34,16 @@ function onKeyUp(e) {
 
 function handleKeyPress(key, isPressed) {
   switch (key) {
-    case 'ArrowUp':
+    case 'w':
       isUpKeyPressed = isPressed;
       break;
-    case 'ArrowDown':
+    case 's':
       isDownKeyPressed = isPressed;
       break;
-    case 'ArrowLeft':
+    case 'a':
       isLeftKeyPressed = isPressed;
       break;
-    case 'ArrowRight':
+    case 'd':
       isRightKeyPressed = isPressed;
       break;
   }

@@ -11,6 +11,8 @@ class Player extends ObjectClass {
     this.fire = 0;
     this.score = 0;
     this.moving = 0;
+    this.stone = 0;
+    this.powerStone = 0;
   }
 
   // Returns a newly created bullet, or null.

@@ -26,7 +26,7 @@ window.addEventListener('resize', debounce(40, setCanvasDimensions));
 let animationFrameRequestId;
 
 function render() {
-  const { me, others, bullets } = getCurrentState();
+  const { me, others, bullets, resources } = getCurrentState();
   if (me) {
     // Draw background
     renderBackground(me.x, me.y);
@@ -38,6 +38,9 @@ function render() {
 
     // Draw all bullets
     bullets.forEach(renderBullet.bind(null, me));
+
+    // Draw all resources
+    resources.forEach(renderResource.bind(null, me));
 
     // Draw all players
     renderPlayer(me, me);
@@ -59,8 +62,7 @@ function renderBackground(x, y) {
     backgroundY,
     MAP_SIZE / 2,
   );
-  backgroundGradient.addColorStop(0, 'black');
-  backgroundGradient.addColorStop(1, 'gray');
+  backgroundGradient.addColorStop(0, 'brown');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -76,7 +78,7 @@ function renderPlayer(me, player) {
   context.translate(canvasX, canvasY);
   context.rotate(direction);
   context.drawImage(
-    getAsset('ship.svg'),
+    getAsset('Cultivator.png'),
     -PLAYER_RADIUS,
     -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
@@ -85,7 +87,7 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
-  context.fillStyle = 'white';
+  context.fillStyle = 'green';
   context.fillRect(
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
@@ -110,6 +112,17 @@ function renderBullet(me, bullet) {
     BULLET_RADIUS * 2,
     BULLET_RADIUS * 2,
   );
+}
+
+function renderResource(me, resource) {
+  const { x, y} = resource;
+  context.drawImage(
+    getAsset('Stone.png'),
+    canvas.width / 2 + x - me.x,
+    canvas.height / 2 + y - me.y,
+    BULLET_RADIUS * 10,
+    BULLET_RADIUS * 10,
+    );
 }
 
 function renderMainMenu() {
