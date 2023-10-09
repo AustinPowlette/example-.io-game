@@ -34,6 +34,9 @@ io.on('connection', socket => {
 
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
+/*  socket.on(Constants.MSG_TYPES.MOUSE, handleMouseInput);
+  socket.on(Constants.MSG_TYPES.LCLICK, attack);
+  socket.on(Constants.MSG_TYPES.RCLICK, fireBullet);*/
   socket.on('disconnect', onDisconnect);
 });
 
@@ -46,6 +49,22 @@ function joinGame(username) {
 
 function handleInput(dir) {
   game.handleInput(this, dir);
+  console.log(`Input Handled`);
+}
+
+function handleMouseInput(dir) {
+  //game.handleInput(this, dir);
+  console.log(`Mouse Click Handled`);
+}
+
+function attack(dir) {
+  //game.handleInput(this, dir);
+  console.log(`Attack Handled`);
+}
+
+function fireBullet(dir) {
+  //game.handleInput(this, dir);
+  console.log(`Bullet Fired`);
 }
 
 function onDisconnect() {

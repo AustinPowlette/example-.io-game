@@ -17,5 +17,8 @@ module.exports = Object.freeze({
     GAME_UPDATE: 'update',
     INPUT: 'input',
     GAME_OVER: 'dead',
+    LCLICK: 'left_click',
+    RCLICK: 'right_click',
+    MOUSE: 'move_mouse',
   },
 });
