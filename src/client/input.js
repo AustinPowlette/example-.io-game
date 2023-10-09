@@ -8,7 +8,20 @@ let isLeftKeyPressed = false;
 let isRightKeyPressed = false;
 
 function onMouseInput(e) {
-  //handleInput(e.clientX, e.clientY);
+  const dirMouse = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
+  updateMouseDirection(dirMouse);
+}
+
+function onClick(e) {
+  const dirLClick = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
+  attack(dirLClick);
+}
+
+function onContextMenu(e) {
+  e.preventDefault();
+  const dirRClick = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
+  fireBullet(dirRClick);
+
 }
 
 function onKeyDown(e) {
@@ -59,16 +72,13 @@ function calculateDirection() {
   return Math.atan2(x, y);
 }
 
-function handleInput(x, y) {
-  //const dir = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y);
-  //updateDirection(dir);
-}
-
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseInput);
   window.addEventListener('click', onMouseInput);
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
+  window.addEventListener('click', onClick);
+  window.addEventListener('contextmenu', onContextMenu);
 }
 
 export function stopCapturingInput() {
@@ -76,4 +86,6 @@ export function stopCapturingInput() {
   window.removeEventListener('click', onMouseInput);
   window.removeEventListener('keydown', onKeyDown);
   window.removeEventListener('keyup', onKeyUp);
+  window.removeEventListener('click', onClick);
+  window.removeEventListener('contextmenu', onContextMenu);
 }

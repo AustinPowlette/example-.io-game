@@ -38,14 +38,14 @@ export const updateDirection = throttle(20, dir => {
   socket.emit(Constants.MSG_TYPES.INPUT, dir);
 });
 
-export const updateMouseDirection = throttle(20, dir => {
-  socket.emit(Constants.MSG_TYPES.MOUSE, dir);
+export const updateMouseDirection = throttle(20, dirMouse => {
+  socket.emit(Constants.MSG_TYPES.MOUSE, dirMouse);
 });
 
-export const fireBullet = throttle(20, dir => {
-  socket.emit(Constants.MSG_TYPES.RCLICK, dir);
+export const fireBullet = throttle(20, dirRClick => {
+  socket.emit(Constants.MSG_TYPES.RCLICK, dirRClick);
 });
 
-export const attack = throttle(20, dir => {
-  socket.emit(Constants.MSG_TYPES.LCLICK, dir);
+export const attack = throttle(20, dirLClick => {
+  socket.emit(Constants.MSG_TYPES.LCLICK, dirLClick);
 });
