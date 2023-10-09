@@ -46,6 +46,15 @@ class Player extends ObjectClass {
     this.score += Constants.SCORE_BULLET_HIT;
   }
 
+  onDealtDamage(resources) {
+      if ((Math.random(100) * 100 )+ 1 >= 20 ) {
+          this.stone += 1;
+      }
+      else {
+          this.powerStone += 1;
+      }
+    }
+
   serializeForUpdate() {
     return {
       ...(super.serializeForUpdate()),

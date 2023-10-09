@@ -21,8 +21,7 @@ class Resource extends ObjectClass {
 
   takeBulletDamage() {
     this.resourceNum -= 1;
-
-    return resourceNum;
+    return this.resourceNum;
   }
 
 

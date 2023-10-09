@@ -22,7 +22,7 @@ function applyCollisions(players, bullets) {
   return destroyedBullets;
 }
 
-function applyCollisions(resources, bullets) {
+function applyCollisions(resources, bullets, players) {
   const destroyedBullets = [];
   for (let i = 0; i < bullets.length; i++) {
     // Look for a player (who didn't create the bullet) to collide each bullet with.
@@ -31,10 +31,13 @@ function applyCollisions(resources, bullets) {
       const bullet = bullets[i];
       const resource = resources[j];
       if (
-        resource.distanceTo(bullet) <= Constants.PLAYER_RADIUS + Constants.BULLET_RADIUS
+        bullet.parentID != resource.id &&
+        resource.distanceTo(bullet) <= Constants.RESOURCE_RADIUS + Constants.BULLET_RADIUS
       ) {
         destroyedBullets.push(bullet);
-        //const resourceNum = resource.takeBulletDamage();
+        resource.takeBulletDamage();
+        players[bullet.parentID].onDealtDamage(resource);
+
         break;
       }
     }

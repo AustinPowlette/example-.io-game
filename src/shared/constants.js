@@ -11,6 +11,7 @@ module.exports = Object.freeze({
   SCORE_BULLET_HIT: 20,
   SCORE_PER_SECOND: 1,
 
+  RESOURCE_RADIUS: 10,
   RESOURCE_SPAWN_INTERVAL: 1000,
 
   MAP_SIZE: 3000,

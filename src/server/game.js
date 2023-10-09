@@ -118,16 +118,8 @@ class Game {
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
 
     // Apply collisions, give players score for hitting bullets
-    destroyedBullets = applyCollisions(Object.values(this.resources), this.bullets);
+    destroyedBullets = applyCollisions(Object.values(this.resources), this.bullets, (this.players));
     destroyedBullets.forEach(b => {
-      if (this.resources) {
-        if (Math.random(100) + 1 > 20 ) {
-            this.players[b.parentID].stone += 1;
-        }
-        else {
-            this.players[b.parentID].powerStone += 1;
-        }
-      }
     });
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
 
