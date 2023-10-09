@@ -10,6 +10,7 @@ class Game {
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
+    console.log("Updating Server");
   }
 
   addPlayer(socket, username) {
@@ -28,7 +29,35 @@ class Game {
 
   handleInput(socket, dir) {
     if (this.players[socket.id]) {
-      this.players[socket.id].setDirection(dir);
+      this.players[socket.id].moving = 1;
+      this.players[socket.id].setDirectionMove(dir);
+
+    }
+  }
+
+  handleMouseInput(socket, dirMouse) {
+    if (this.players[socket.id]) {
+      this.players[socket.id].setDirectionFace(dirMouse);
+    }
+  }
+
+  attack(socket, dirLClick) {
+    if (this.players[socket.id]) {
+      //this.players[socket.id].
+    }
+  }
+
+  fireBullet(socket, dirRClick) {
+    if (this.players[socket.id]) {
+      const player = this.players[socket.id];
+      this.players[socket.id].setDirectionFace(dirRClick);
+      player.fire = 1;
+    }
+  }
+
+  stopDirection(socket, noDir) {
+    if (this.players[socket.id]) {
+      this.players[socket.id].moving = 0;
     }
   }
 
@@ -53,6 +82,7 @@ class Game {
       const player = this.players[playerID];
       const newBullet = player.update(dt);
       if (newBullet) {
+        newBullet.moving = 1;
         this.bullets.push(newBullet);
       }
     });

@@ -20,5 +20,6 @@ module.exports = Object.freeze({
     LCLICK: 'left_click',
     RCLICK: 'right_click',
     MOUSE: 'move_mouse',
+    NOKEY: 'no_key',
   },
 });

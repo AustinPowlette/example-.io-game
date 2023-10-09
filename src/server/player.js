@@ -8,7 +8,9 @@ class Player extends ObjectClass {
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
+    this.fire = 0;
     this.score = 0;
+    this.moving = 0;
   }
 
   // Returns a newly created bullet, or null.
@@ -24,11 +26,13 @@ class Player extends ObjectClass {
 
     // Fire a bullet, if needed
     this.fireCooldown -= dt;
-    if (this.fireCooldown <= 0) {
+    if (this.fireCooldown <= 0 && this.fire == 1) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
-      return new Bullet(this.id, this.x, this.y, this.direction);
+      this.fire = 0;
+      return new Bullet(this.id, this.x, this.y, this.directionFace);
     }
 
+    this.fire = 0;
     return null;
   }
 
@@ -43,7 +47,8 @@ class Player extends ObjectClass {
   serializeForUpdate() {
     return {
       ...(super.serializeForUpdate()),
-      direction: this.direction,
+      directionMove: this.directionMove,
+      direction: this.directionFace,
       hp: this.hp,
     };
   }

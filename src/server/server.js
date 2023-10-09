@@ -37,6 +37,7 @@ io.on('connection', socket => {
   socket.on(Constants.MSG_TYPES.MOUSE, handleMouseInput);
   socket.on(Constants.MSG_TYPES.LCLICK, attack);
   socket.on(Constants.MSG_TYPES.RCLICK, fireBullet);
+  socket.on(Constants.MSG_TYPES.NOKEY, stopDirection);
   socket.on('disconnect', onDisconnect);
 });
 
@@ -49,22 +50,22 @@ function joinGame(username) {
 
 function handleInput(dir) {
   game.handleInput(this, dir);
-  console.log('Player is moving!');
 }
 
-function handleMouseInput(dir) {
-  //game.handleInput(this, dir);
-  console.log('Mouse Moved');
+function handleMouseInput(dirMouse) {
+  game.handleMouseInput(this, dirMouse);
 }
 
-function attack(dir) {
-  //game.handleInput(this, dir);
-  console.log('Attack received');
+function attack(dirLClick) {
+  //game.attack(this, dirLClick);
 }
 
-function fireBullet(dir) {
-  //game.handleInput(this, dir);
-  console.log('Bullet Fired!');
+function fireBullet(dirRClick) {
+  game.fireBullet(this, dirRClick);
+}
+
+function stopDirection(noDir) {
+  game.stopDirection(this, noDir);
 }
 
 function onDisconnect() {

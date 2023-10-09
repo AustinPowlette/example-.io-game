@@ -49,3 +49,7 @@ export const fireBullet = throttle(20, dirRClick => {
 export const attack = throttle(20, dirLClick => {
   socket.emit(Constants.MSG_TYPES.LCLICK, dirLClick);
 });
+
+export const stopDirection = throttle(20, noDir => {
+  socket.emit(Constants.MSG_TYPES.NOKEY, noDir);
+});
