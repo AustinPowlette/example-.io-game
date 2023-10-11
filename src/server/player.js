@@ -78,7 +78,7 @@ class Player extends ObjectClass {
   }
 
   onDealtDamage() {
-      if ((Math.random(100) * 100 )+ 1 >= 20 ) {
+      if ((Math.random(100) * 100 )+ 1 >= 20 + (this.level/2) ) {
           this.stone += 1;
       }
       else {
