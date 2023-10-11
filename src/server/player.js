@@ -13,6 +13,7 @@ class Player extends ObjectClass {
     this.fire = 0;
     this.eatCooldown = 0;
     this.eat = 0;
+    this.healCooldown = 0;
     this.score = 0;
     this.moving = 0;
     this.stone = 0;
@@ -32,6 +33,15 @@ class Player extends ObjectClass {
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+
+    // Heal Damage
+    this.healCooldown -= dt;
+    if (this.healCooldown <= 0) {
+      this.hp += this.maxHP*0.01
+      if (this.hp > this.maxHP) {
+      this.hp = this.maxHP;}
+      this.healCooldown++;
+      }
 
     // Fire a bullet, if needed
     this.fireCooldown -= dt;

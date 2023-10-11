@@ -112,7 +112,13 @@ function renderPlayer(me, player) {
     PLAYER_RADIUS * 2 - PLAYER_RADIUS * 2 * (player.hp / player.maxHP),
     2,
   );
-}
+
+// Draw number of power stones
+if (me.id === player.id) {
+context.fillStyle = 'white';
+context.font = '12px Arial';
+context.fillText('Power Stones: ' + me.powerStone, canvasX - (PLAYER_RADIUS * 2), canvasY + PLAYER_RADIUS + 24);
+}}
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
