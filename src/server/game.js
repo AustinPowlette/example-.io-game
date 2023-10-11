@@ -9,6 +9,7 @@ class Game {
     this.players = {};
     this.bullets = [];
     this.resources = [];
+    this.resourcesCount = 0;
     this.lastResourceSpawnTime = Date.now();
     this.resourceSpawnInterval = Constants.RESOURCE_SPAWN_INTERVAL; // Define this constant
     this.lastUpdateTime = Date.now();
@@ -44,19 +45,25 @@ class Game {
     }
   }
 
-  attack(socket, dirLClick) {
+  eatStone(socket, dirRClick) {
     if (this.players[socket.id]) {
-      //this.players[socket.id].
+      this.players[socket.id].eat = 1;
     }
   }
 
-  fireBullet(socket, dirRClick) {
+  fireBullet(socket, dirLClick) {
     if (this.players[socket.id]) {
-      const player = this.players[socket.id];
-      this.players[socket.id].setDirectionFace(dirRClick);
-      player.fire = 1;
+      this.players[socket.id].setDirectionFace(dirLClick);
+      this.players[socket.id].fire = 1;
     }
   }
+
+  stopClick(socket, dirSLClick) {
+      if (this.players[socket.id]) {
+        this.players[socket.id].setDirectionFace(dirSLClick);
+        this.players[socket.id].fire = 0;
+      }
+    }
 
   stopDirection(socket, noDir) {
     if (this.players[socket.id]) {
@@ -66,7 +73,7 @@ class Game {
 
   updateResources() {
       const now = Date.now();
-      if (now - this.lastResourceSpawnTime >= this.resourceSpawnInterval) {
+      if (now - this.lastResourceSpawnTime >= this.resourceSpawnInterval && this.resources.length < Constants.RESOURCE_LIMIT) {
         this.spawnResource();
         this.lastResourceSpawnTime = now;
       }
@@ -75,7 +82,7 @@ class Game {
     spawnResource() {
       const x = Math.random() * Constants.MAP_SIZE;
       const y = Math.random() * Constants.MAP_SIZE;
-      const resource = new Resource(this.resources.length, x, y);
+      const resource = new Resource(this.resourcesCount++, x, y);
       this.resources.push(resource);
     }
 
@@ -122,6 +129,12 @@ class Game {
     destroyedBullets.forEach(b => {
     });
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
+
+
+    // Check to see if any resources need to be deleted
+    this.resources = this.resources.filter(resource => {
+      return resource.resourceNum > 0;
+    });
 
     // Check if any players are dead
     Object.keys(this.sockets).forEach(playerID => {

@@ -1,6 +1,6 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#6-client-input-%EF%B8%8F
-import { updateDirection, updateMouseDirection, attack, fireBullet, stopDirection } from './networking';
+import { updateDirection, updateMouseDirection, eatStone, fireBullet, stopDirection, stopClick } from './networking';
 
 let isUpKeyPressed = false;
 let isDownKeyPressed = false;
@@ -10,17 +10,29 @@ let isRightKeyPressed = false;
 function onMouseInput(e) {
   const dirMouse = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
   updateMouseDirection(dirMouse);
+
+
+  if (e.type === 'mousedown' && e.button === 0) {
+    fireBullet(dirMouse);
+  }
+
+  else if (e.type === 'mouseup' && e.button === 0) {
+    stopClick(dirMouse);
+  }
+
+
 }
 
 function onClick(e) {
-  const dirLClick = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
-  attack(dirLClick);
+  //console.log("Left Click");
+  //const dirLClick = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
+  //fireBullet(dirLClick);
 }
 
 function onContextMenu(e) {
   e.preventDefault();
   const dirRClick = Math.atan2(e.clientX - window.innerWidth / 2, window.innerHeight / 2 - e.clientY);
-  fireBullet(dirRClick);
+  eatStone(dirRClick);
 
 }
 
@@ -81,6 +93,8 @@ function calculateDirection() {
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseInput);
   window.addEventListener('click', onMouseInput);
+  window.addEventListener('mousedown', onMouseInput);
+  window.addEventListener('mouseup', onMouseInput);
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('click', onClick);
@@ -90,6 +104,8 @@ export function startCapturingInput() {
 export function stopCapturingInput() {
   window.removeEventListener('mousemove', onMouseInput);
   window.removeEventListener('click', onMouseInput);
+  window.removeEventListener('mousedown', onMouseInput);
+  window.removeEventListener('mouseup', onMouseInput);
   window.removeEventListener('keydown', onKeyDown);
   window.removeEventListener('keyup', onKeyUp);
   window.removeEventListener('click', onClick);

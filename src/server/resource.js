@@ -5,7 +5,7 @@ const Constants = require('../shared/constants');
 class Resource extends ObjectClass {
   constructor(id, x, y) {
     super(id, x, y, 0, 0);
-    this.resourceNum = 200;
+    this.resourceNum = 25;
   }
 
   // Returns a newly created bullet, or null.

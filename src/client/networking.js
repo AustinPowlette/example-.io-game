@@ -42,14 +42,18 @@ export const updateMouseDirection = throttle(20, dirMouse => {
   socket.emit(Constants.MSG_TYPES.MOUSE, dirMouse);
 });
 
-export const fireBullet = throttle(20, dirRClick => {
+export const eatStone = throttle(20, dirRClick => {
   socket.emit(Constants.MSG_TYPES.RCLICK, dirRClick);
 });
 
-export const attack = throttle(20, dirLClick => {
+export const fireBullet = throttle(20, dirLClick => {
   socket.emit(Constants.MSG_TYPES.LCLICK, dirLClick);
 });
 
 export const stopDirection = throttle(20, noDir => {
   socket.emit(Constants.MSG_TYPES.NOKEY, noDir);
+});
+
+export const stopClick = throttle(20, dirSLClick => {
+  socket.emit(Constants.MSG_TYPES.SLCLICK, dirSLClick);
 });

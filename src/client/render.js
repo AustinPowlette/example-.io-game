@@ -6,7 +6,7 @@ import { getCurrentState } from './state';
 
 const Constants = require('../shared/constants');
 
-const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
+const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE, RESOURCE_RADIUS } = Constants;
 
 // Get the canvas graphics context
 const canvas = document.getElementById('game-canvas');
@@ -91,26 +91,27 @@ function renderPlayer(me, player) {
   context.fillRect(
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2,
+    PLAYER_RADIUS * 2 * (player.hp / PLAYER_MAX_HP),
     2,
   );
   context.fillStyle = 'red';
   context.fillRect(
-    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * player.hp / PLAYER_MAX_HP,
+    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * (player.hp / PLAYER_MAX_HP),
     canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+    PLAYER_RADIUS * 2 - PLAYER_RADIUS * 2 * (player.hp / PLAYER_MAX_HP),
     2,
   );
 }
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
+  console.log("Making bullet sized: " + bullet.bulletSize + " ParentID: " + bullet.parentID);
   context.drawImage(
     getAsset('bullet.svg'),
-    canvas.width / 2 + x - me.x - BULLET_RADIUS,
-    canvas.height / 2 + y - me.y - BULLET_RADIUS,
-    BULLET_RADIUS * 2,
-    BULLET_RADIUS * 2,
+    canvas.width / 2 + x - me.x - (BULLET_RADIUS),
+    canvas.height / 2 + y - me.y - (BULLET_RADIUS),
+    ((BULLET_RADIUS * 2) /*+ bullet.bulletSize*/),
+    ((BULLET_RADIUS * 2) /*+ bullet.bulletSize*/),
   );
 }
 
@@ -120,8 +121,8 @@ function renderResource(me, resource) {
     getAsset('Stone.png'),
     canvas.width / 2 + x - me.x,
     canvas.height / 2 + y - me.y,
-    BULLET_RADIUS * 10,
-    BULLET_RADIUS * 10,
+    RESOURCE_RADIUS,
+    RESOURCE_RADIUS,
     );
 }
 

@@ -35,9 +35,10 @@ io.on('connection', socket => {
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   socket.on(Constants.MSG_TYPES.MOUSE, handleMouseInput);
-  socket.on(Constants.MSG_TYPES.LCLICK, attack);
-  socket.on(Constants.MSG_TYPES.RCLICK, fireBullet);
+  socket.on(Constants.MSG_TYPES.LCLICK, fireBullet);
+  socket.on(Constants.MSG_TYPES.RCLICK, eatStone);
   socket.on(Constants.MSG_TYPES.NOKEY, stopDirection);
+  socket.on(Constants.MSG_TYPES.SLCLICK, stopClick);
   socket.on('disconnect', onDisconnect);
 });
 
@@ -56,16 +57,20 @@ function handleMouseInput(dirMouse) {
   game.handleMouseInput(this, dirMouse);
 }
 
-function attack(dirLClick) {
-  //game.attack(this, dirLClick);
+function eatStone(dirRClick) {
+  game.eatStone(this, dirRClick);
 }
 
-function fireBullet(dirRClick) {
-  game.fireBullet(this, dirRClick);
+function fireBullet(dirLClick) {
+  game.fireBullet(this, dirLClick);
 }
 
 function stopDirection(noDir) {
   game.stopDirection(this, noDir);
+}
+
+function stopClick(dirSLClick) {
+  game.stopClick(this, dirSLClick);
 }
 
 function onDisconnect() {
