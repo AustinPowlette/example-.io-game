@@ -107,6 +107,7 @@ class Player extends ObjectClass {
       powerStone: this.powerStone,
       stone: this.stone,
       maxHP: this.maxHP,
+      level: this.level,
     };
   }
 }

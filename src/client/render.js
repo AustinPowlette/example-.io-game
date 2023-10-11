@@ -87,18 +87,27 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
-  context.fillStyle = 'green';
+  if (player.level - me.level > 10) {
+    context.fillStyle = 'red';
+  }
+  else if (player.level - me.level < -10) {
+    context.fillStyle = 'blue';
+  }
+  else {
+    context.fillStyle = 'green';
+  }
+  //context.fillStyle = 'green';
   context.fillRect(
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2 * (player.hp / PLAYER_MAX_HP),
+    PLAYER_RADIUS * 2 * (player.hp / player.maxHP),
     2,
   );
-  context.fillStyle = 'red';
+  context.fillStyle = 'black';
   context.fillRect(
-    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * (player.hp / PLAYER_MAX_HP),
+    canvasX - PLAYER_RADIUS + PLAYER_RADIUS * 2 * (player.hp / player.maxHP),
     canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2 - PLAYER_RADIUS * 2 * (player.hp / PLAYER_MAX_HP),
+    PLAYER_RADIUS * 2 - PLAYER_RADIUS * 2 * (player.hp / player.maxHP),
     2,
   );
 }
