@@ -68,20 +68,16 @@ class Player extends ObjectClass {
     return null;
   }
 
-  takeBulletDamage(bullet) {
+  takeBulletDamage(bullet, player) {
+  //console.log("Bullet Player: " + bullet.playerID + " Player: " + player.id);
     this.hp -= Constants.BULLET_DAMAGE * Math.pow(1.3, bullet.bulletDmg);
-    console.log("Bullet Damage: " + (Constants.BULLET_DAMAGE * Math.pow(1.3, bullet.bulletDmg)));
     if (this.hp <= 0) {
-      bullet.player.powerStone += this.powerStone;
-      bullet.player.stone += this.stone;
+      player.powerStone += this.powerStone;
+      player.stone += this.stone;
     }
   }
 
   onDealtDamage() {
-    this.score += Constants.SCORE_BULLET_HIT;
-  }
-
-  onDealtDamage(resources) {
       if ((Math.random(100) * 100 )+ 1 >= 20 ) {
           this.stone += 1;
       }
@@ -108,6 +104,9 @@ class Player extends ObjectClass {
       directionMove: this.directionMove,
       direction: this.directionFace,
       hp: this.hp,
+      powerStone: this.powerStone,
+      stone: this.stone,
+      maxHP: this.maxHP,
     };
   }
 }

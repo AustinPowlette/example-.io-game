@@ -116,7 +116,7 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-    destroyedBullets = applyCollisions(Object.values(this.resources), Object.values(this.bullets), Object.values(this.players));
+    const destroyedBullets = applyCollisions(Object.values(this.resources), Object.values(this.bullets), Object.values(this.players));
     /*destroyedBullets.forEach(b => {
       if (this.players[b.parentID]) {
         this.players[b.parentID].onDealtDamage();
