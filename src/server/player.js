@@ -6,6 +6,7 @@ class Player extends ObjectClass {
   constructor(id, username, x, y) {
     super(id, x, y, Math.random() * 2 * Math.PI, Constants.PLAYER_SPEED);
     this.username = username;
+    this.kind = 1;
     this.maxHP = Constants.PLAYER_MAX_HP;
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireCooldown = 0;
@@ -28,9 +29,6 @@ class Player extends ObjectClass {
   update(dt) {
     super.update(dt);
 
-    // Update score
-    this.score += dt * Constants.SCORE_PER_SECOND;
-
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
@@ -38,6 +36,7 @@ class Player extends ObjectClass {
     // Fire a bullet, if needed
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0 && this.fire == 1) {
+      this.fireCooldown = 0;
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
       return new Bullet(this.id, this.x, this.y, this.directionFace, this);
     }
@@ -51,6 +50,9 @@ class Player extends ObjectClass {
           while (this.powerStone > 0 && this.experience < this.experienceRequired)  {
             this.powerStone--;
             this.experience += Constants.POWERSTONE_EXP_GAIN;
+
+            // Update score
+            this.score += Constants.POWERSTONE_EXP_GAIN;
           }
           console.log("Experience: " + this.experience + "/" + this.experienceRequired);
           if (this.experience >= this.experienceRequired) {
@@ -66,8 +68,13 @@ class Player extends ObjectClass {
     return null;
   }
 
-  takeBulletDamage() {
-    this.hp -= Constants.BULLET_DAMAGE;
+  takeBulletDamage(bullet) {
+    this.hp -= Constants.BULLET_DAMAGE * Math.pow(1.3, bullet.bulletDmg);
+    console.log("Bullet Damage: " + (Constants.BULLET_DAMAGE * Math.pow(1.3, bullet.bulletDmg)));
+    if (this.hp <= 0) {
+      bullet.player.powerStone += this.powerStone;
+      bullet.player.stone += this.stone;
+    }
   }
 
   onDealtDamage() {

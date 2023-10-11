@@ -13,8 +13,9 @@ Foliage
 Buildings and areas that increase power stone gain
 
 Piercing (Remant Damage. Bullets will have damage. If piercing is on the bullet the bullet's health will be checked against the player and subtracted. Then it will continue on doing reduced damage to something else until it runs out of pierce or gets destroyed
+Regen
+Damage
 Speed
 Health
-Regen
 Movement Speed
 

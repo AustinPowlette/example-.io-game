@@ -116,18 +116,12 @@ class Game {
     });
 
     // Apply collisions, give players score for hitting bullets
-    let destroyedBullets = applyCollisions(Object.values(this.players), this.bullets);
-    destroyedBullets.forEach(b => {
+    destroyedBullets = applyCollisions(Object.values(this.resources), Object.values(this.bullets), Object.values(this.players));
+    /*destroyedBullets.forEach(b => {
       if (this.players[b.parentID]) {
         this.players[b.parentID].onDealtDamage();
       }
-    });
-    this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
-
-    // Apply collisions, give players score for hitting bullets
-    destroyedBullets = applyCollisions(Object.values(this.resources), this.bullets, (this.players));
-    destroyedBullets.forEach(b => {
-    });
+    });*/
     this.bullets = this.bullets.filter(bullet => !destroyedBullets.includes(bullet));
 
 

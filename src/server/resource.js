@@ -5,6 +5,7 @@ const Constants = require('../shared/constants');
 class Resource extends ObjectClass {
   constructor(id, x, y) {
     super(id, x, y, 0, 0);
+    this.kind = 3;
     this.resourceNum = 25;
   }
 

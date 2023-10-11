@@ -8,6 +8,7 @@ class Object {
     this.directionFace = dir;
     this.speed = speed;
     this.moving = 0;
+    this.kind = 0;
   }
 
   update(dt) {
@@ -37,6 +38,7 @@ class Object {
       x: this.x,
       y: this.y,
       moving: this.moving,
+      kind: this.kind,
     };
   }
 }

@@ -105,13 +105,12 @@ function renderPlayer(me, player) {
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
-  console.log("Making bullet sized: " + bullet.bulletSize + " ParentID: " + bullet.parentID);
   context.drawImage(
-    getAsset('bullet.svg'),
-    canvas.width / 2 + x - me.x - (BULLET_RADIUS),
-    canvas.height / 2 + y - me.y - (BULLET_RADIUS),
-    ((BULLET_RADIUS * 2) /*+ bullet.bulletSize*/),
-    ((BULLET_RADIUS * 2) /*+ bullet.bulletSize*/),
+    getAsset('fireball.png'),
+    canvas.width / 2 + x - me.x - (BULLET_RADIUS + (bullet.bulletSize / 2)),
+    canvas.height / 2 + y - me.y - (BULLET_RADIUS + (bullet.bulletSize / 2)),
+    ((BULLET_RADIUS * 8) + bullet.bulletSize),
+    ((BULLET_RADIUS * 8) + bullet.bulletSize),
   );
 }
 
