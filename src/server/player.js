@@ -62,7 +62,7 @@ class Player extends ObjectClass {
             this.experience += Constants.POWERSTONE_EXP_GAIN;
 
             // Update score
-            this.score += Constants.POWERSTONE_EXP_GAIN;
+            //this.score += Constants.POWERSTONE_EXP_GAIN;
           }
           console.log("Experience: " + this.experience + "/" + this.experienceRequired);
           if (this.experience >= this.experienceRequired) {
@@ -70,6 +70,7 @@ class Player extends ObjectClass {
             this.level++;
             this.calculateExperienceRequired();
             this.updateStats();
+            this.score = this.level;
             console.log("You have leveled up to level " + this.level + "!");
           }
 

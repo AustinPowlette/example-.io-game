@@ -63,7 +63,8 @@ function renderBackground(x, y) {
     MAP_SIZE / 2,
   );
   //backgroundGradient.addColorStop(0.5, 'white');
-  backgroundGradient.addColorStop(1, 'gray');
+  backgroundGradient.addColorStop(1, '#8FBC8F');
+  //backgroundGradient.addColorStop(1, 'black');
   //backgroundGradient.addColorStop(0, 'yellow');
   context.fillStyle = backgroundGradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -117,7 +118,7 @@ function renderPlayer(me, player) {
 if (me.id === player.id) {
 context.fillStyle = 'white';
 context.font = '12px Arial';
-context.fillText('Power Stones: ' + me.powerStone, canvasX - (PLAYER_RADIUS * 2), canvasY + PLAYER_RADIUS + 24);
+context.fillText('Power Stones: ' + parseInt(me.powerStone, 10), canvasX - (PLAYER_RADIUS * 2), canvasY + PLAYER_RADIUS + 24);
 }}
 
 function renderBullet(me, bullet) {
